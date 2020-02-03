@@ -23,9 +23,7 @@ Dockerfile for running [Pathfinder](https://github.com/exodus4d/pathfinder), the
 6. [Complete Setup.](#Setup)
 
 # So why the fork?
-Purely as if you need to import maps, they can be fairly large.  For example, there are 109 system in the Catch region.  Importing this date results too many input variables in the header 
-for php to deal with.  The php.ini therefore has been cloned and you can alter the max_input_vars to suit the needs of importing.
+Purely as if you need to import maps, they can be fairly large.  For example, there are 109 system in the Catch region.  Importing this date results too many input variables in the header
+for php to deal with.  The php.ini therefore has been cloned and you can alter the max_input_vars to suit the needs of importing. x
 
 ## probably worth nothing that if the php version changes, you might need to redirect the volume.
-
-
