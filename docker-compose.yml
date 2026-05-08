@@ -1,23 +1,33 @@
-version: '2.0'
-
 services:
-    db:
-        image: mysql:5.7
-        volumes:
-            - database:/var/lib/mysql
-            - ./config/start.sql:/docker-entrypoint-initdb.d/start.sql
-        restart: always
-        environment:
-          MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-          MYSQL_USER: "${MYSQL_USER}"
+  db:
+    image: mysql:5.7
+    volumes:
+      - database:/var/lib/mysql
+      - ./config/start.sql:/docker-entrypoint-initdb.d/start.sql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
 
-    pathfinder:
-        image: kryptedgaming/pathfinder:latest
-        env_file: .env
-        volumes:
-            - ./config/php.ini:/etc/php/7.2/fpm/php.ini
-        ports:
-            - "8000:80"
+  pathfinder:
+    image: kryptedgaming/pathfinder:latest
+    env_file: .env
+    volumes:
+      - ./config/php.ini:/etc/php/7.2/fpm/php.ini
+    networks:
+      - default
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.routers.pathfinder.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.pathfinder.entrypoints=websecure"
+      - "traefik.http.routers.pathfinder.tls.certresolver=letsencrypt"
+      - "traefik.http.services.pathfinder.loadbalancer.server.port=80"
 
 volumes:
-    database: {}
+  database: {}
+
+networks:
+  traefik-public:
+    external: true
