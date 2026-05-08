@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -n \"^INSERT INTO \\\\`system\\\\`\" /Users/graemequantrill/projects/404/pathfinder-docker/eve_universe.sql)"
+    ]
+  }
+}
